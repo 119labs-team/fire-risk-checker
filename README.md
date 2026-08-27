@@ -44,3 +44,4 @@ app.register_blueprint(fire_safety_bp, url_prefix="/fire")
 - `fire_safety.py`: 점수 계산, DB 저장, 화면/API 주소
 - `templates/`: 체크리스트·결과·기록 화면
 - `static/style.css`: 화면 디자인
+# fire-risk-checker
