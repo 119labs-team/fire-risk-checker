@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}화재 안전 체크 | 집콕세이프{% endblock %}
+{% block content %}
+<section class="intro">
+  <p class="eyebrow">FIRE SAFETY CHECK</p>
+  <h1>우리 집 화재 위험도 체크</h1>
+  <p>현재 집의 상태를 기준으로 모든 항목에 답해주세요.</p>
+</section>
+
+<form method="post" class="card checklist">
+  {% for item in items %}
+  <fieldset>
+    <legend><span>{{ loop.index }}</span>{{ item.text }}</legend>
+    <label><input type="radio" name="{{ item.id }}" value="yes" required
+      {% if answers and answers[item.id] == 'yes' %}checked{% endif %}> 예</label>
+    <label><input type="radio" name="{{ item.id }}" value="no"
+      {% if answers and answers[item.id] == 'no' %}checked{% endif %}> 아니요</label>
+  </fieldset>
+  {% endfor %}
+  <button type="submit">위험도 분석하기</button>
+</form>
+{% endblock %}
+
