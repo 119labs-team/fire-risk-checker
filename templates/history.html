@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}위험도 변화 기록 | 집콕세이프{% endblock %}
+{% block content %}
+<section class="intro">
+  <p class="eyebrow">RISK HISTORY</p>
+  <h1>위험도 변화 기록</h1>
+  <p>점수가 낮아질수록 우리 집이 더 안전해진 것입니다.</p>
+</section>
+
+{% if records %}
+<section class="card">
+  <div class="chart" aria-label="위험 점수 막대 차트">
+    {% for record in records %}
+    <div class="bar-wrap">
+      <span class="bar-score">{{ record.score }}</span>
+      <div class="bar" style="height: {{ [record.score, 4]|max }}%"></div>
+      <small>{{ record.created_at[5:10] }}</small>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="card table-wrap">
+  <table>
+    <thead><tr><th>검사 일시</th><th>점수</th><th>위험도</th><th>미준수</th></tr></thead>
+    <tbody>
+      {% for record in records|reverse %}
+      <tr>
+        <td>{{ record.created_at.replace('T', ' ') }}</td>
+        <td>{{ record.score }}점</td>
+        <td>{{ record.risk_level }}</td>
+        <td>{{ record.unsafe_count }}개</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% else %}
+<section class="card empty">
+  <p>아직 검사 기록이 없습니다.</p>
+  <a class="button" href="{{ url_for('fire_safety.checklist') }}">첫 안전 체크 시작하기</a>
+</section>
+{% endif %}
+{% endblock %}
+
